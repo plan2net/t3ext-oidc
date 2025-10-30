@@ -330,7 +330,10 @@ class AuthenticationService extends \TYPO3\CMS\Core\Authentication\Authenticatio
                 'pid',
                 $queryBuilder->createNamedParameter($this->config->usersStoragePids, Connection::PARAM_INT_ARRAY)
             ),
-            $queryBuilder->expr()->eq('tx_oidc', $queryBuilder->createNamedParameter($resourceOwnerObject->getId())),
+            $queryBuilder->expr()->or(
+                $queryBuilder->expr()->eq('tx_oidc', $queryBuilder->createNamedParameter($resourceOwnerObject->getId())),
+                $queryBuilder->expr()->eq('username', $queryBuilder->createNamedParameter($info['preferred_username']))
+            )
         ];
 
         $event = new AuthenticationFetchUserEvent($info, $userFetchConditions, $queryBuilder, $this);
@@ -714,6 +717,15 @@ class AuthenticationService extends \TYPO3\CMS\Core\Authentication\Authenticatio
             'city'       => '<Ort>',
             'country'    => '<Land>',
         ];
+
+        if ($table === 'be_users') {
+            return [
+                'username'   => '<preferred_username> // <email> // <sub>',
+                'realName'   => '<name>',
+                'email'      => '<email>',
+            ];
+        }
+
 
         if ($table === 'fe_users') {
             $feSim = $this->getFrontendSimulation();
