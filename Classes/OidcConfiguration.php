@@ -39,6 +39,7 @@ final class OidcConfiguration
     public string $endpointLogout = '';
     public bool $revokeAccessTokenAfterLogin = false;
     public bool $enablePasswordCredentials = false;
+    public string $loginLabel = '';
 
     public function __construct()
     {
@@ -70,5 +71,6 @@ final class OidcConfiguration
         $this->oidcRedirectUri = $extConfig['oidcRedirectUri'];
         $this->revokeAccessTokenAfterLogin = (bool)$extConfig['oidcRevokeAccessTokenAfterLogin'];
         $this->enablePasswordCredentials = (bool)$extConfig['enablePasswordCredentials'];
+        $this->loginLabel = $extConfig['loginLabel'] ?? 'OIDC Login';
     }
 }

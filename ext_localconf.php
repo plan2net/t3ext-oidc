@@ -77,6 +77,7 @@ if ($settings->enableBackendAuthentication) {
         'provider' => OidcLoginProvider::class,
         'sorting' => 50,
         'iconIdentifier' => 'actions-key',
-        'label' => 'OIDC',
+        'label' => $settings->loginLabel,
+
     ];
 }

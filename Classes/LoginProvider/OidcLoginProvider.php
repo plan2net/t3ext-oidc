@@ -20,10 +20,12 @@ class OidcLoginProvider implements LoginProviderInterface
      */
     public function render(StandaloneView $view, PageRenderer $pageRenderer, LoginController $loginController)
     {
+        $config = GeneralUtility::makeInstance(\Causal\Oidc\OidcConfiguration::class);
         $view->setTemplatePathAndFilename(
             GeneralUtility::getFileAbsFileName('EXT:oidc/Resources/Private/Templates/Backend/LoginOidc.html')
         );
 
         $view->assign('enablePasswordReset', false);
+        $view->assign('loginLabel', $config->loginLabel);
     }
 }
